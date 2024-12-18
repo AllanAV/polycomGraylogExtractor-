@@ -1,0 +1,99 @@
+{
+  "extractors": [
+    {
+      "title": "Host IP",
+      "extractor_type": "split_and_index",
+      "converters": [],
+      "order": 0,
+      "cursor_strategy": "cut",
+      "source_field": "message",
+      "target_field": "host_ip",
+      "extractor_config": {
+        "index": 1,
+        "split_by": " "
+      },
+      "condition_type": "none",
+      "condition_value": ""
+    },
+    {
+      "title": "Culmulative events missed due to high CPU load",
+      "extractor_type": "regex",
+      "converters": [],
+      "order": 5,
+      "cursor_strategy": "copy",
+      "source_field": "message",
+      "target_field": "poly_missed_events_high_cpu",
+      "extractor_config": {
+        "regex_value": "\\|+([0-9]{2,3})\\|"
+      },
+      "condition_type": "none",
+      "condition_value": ""
+    },
+    {
+      "title": "Event description",
+      "extractor_type": "regex",
+      "converters": [],
+      "order": 6,
+      "cursor_strategy": "copy",
+      "source_field": "message",
+      "target_field": "poly_event_description",
+      "extractor_config": {
+        "regex_value": "\\|..\\|+(.*)$"
+      },
+      "condition_type": "none",
+      "condition_value": ""
+    },
+    {
+      "title": "Event Timestamp",
+      "extractor_type": "regex",
+      "converters": [
+        {
+          "type": "date",
+          "config": {
+            "date_format": "MMddHHmmss",
+            "time_zone": "America/New_York",
+            "locale": "en-US"
+          }
+        }
+      ],
+      "order": 2,
+      "cursor_strategy": "copy",
+      "source_field": "message",
+      "target_field": "poly_event_timestamp",
+      "extractor_config": {
+        "regex_value": "\\s+([0-9]+)\\|"
+      },
+      "condition_type": "none",
+      "condition_value": ""
+    },
+    {
+      "title": "Event Module",
+      "extractor_type": "regex",
+      "converters": [],
+      "order": 3,
+      "cursor_strategy": "copy",
+      "source_field": "message",
+      "target_field": "poly_module",
+      "extractor_config": {
+        "regex_value": "\\|+([A-Za-z]{1,5})+\\s"
+      },
+      "condition_type": "none",
+      "condition_value": ""
+    },
+    {
+      "title": "Event level",
+      "extractor_type": "regex",
+      "converters": [],
+      "order": 4,
+      "cursor_strategy": "copy",
+      "source_field": "message",
+      "target_field": "poly_module_level",
+      "extractor_config": {
+        "regex_value": "\\|+([0-9])+\\|"
+      },
+      "condition_type": "none",
+      "condition_value": ""
+    }
+  ],
+  "version": "6.0.7"
+}
